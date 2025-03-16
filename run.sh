@@ -60,9 +60,9 @@ docker run -d \
     --name=wg-easy \
     -e WG_HOST=$ipv4 \
     -e PASSWORD=$PASSWORD \
-    -e WG_DEFAULT_ADDRESS=10.0.8.x \
+    -e WG_DEFAULT_ADDRESS=192.168.8.x \
     -e WG_DEFAULT_DNS=223.5.5.5,223.6.6.6 \
-    -e WG_ALLOWED_IPS=10.0.8.0/24 \
+    -e WG_ALLOWED_IPS=192.168.8.0/24 \
     -e WG_PERSISTENT_KEEPALIVE=25 -v $(pwd)/data/etc/wireguard:/etc/wireguard \
     -e WG_PORT=$TCP_PORT\
     -p $TCP_PORT:51820/udp \
@@ -70,6 +70,7 @@ docker run -d \
     --cap-add=NET_ADMIN \
     --cap-add=SYS_MODULE \
     --sysctl="net.ipv4.conf.all.src_valid_mark=1" \
+    --sysctl="net.ipv6.conf.all.forwarding=1" \
     --sysctl="net.ipv4.ip_forward=1" \
     --restart unless-stopped \
     weejewel/wg-easy
